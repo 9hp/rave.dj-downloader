@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Rave.dj Downloader</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+</head>
+<body>
+<h1>Rave.dj Downloader</h1>
+If the video does not download then this might be broken/you need to wait for the video to finish!
+<br>
+<input type="text" id="url" value="Rave.dj URL">
+<button onclick="download()">Download</button>  
+<script>
+var downloader = function(downloadURL) {
+
+   location = downloadURL;
+
+};
+
+function download() {
+    var theURL = document.getElementById("url").value;
+    var myURL = theURL.split("/");
+    console.log(myURL)
+    var realURL = "https://api.red.wemesh.ca/mashups/" + myURL[3];
+
+    $.getJSON(realURL, function( json ) {
+      if(json.data.videos.max == null) {
+       alert("Wait for the video to finish!").then(location.reload())
+      } else {
+       downloader(json.data.videos.max);
+       console.log( "MP4 URL: " + json.data.videos.max);
+      }
+    });
+
+}
+</script>
+</body>
+</html>
